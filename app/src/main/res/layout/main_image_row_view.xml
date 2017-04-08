@@ -8,7 +8,7 @@
 
 		<variable
 			name="image"
-			type="com.developer4droid.swipegallery.viewmodel.MainImageViewModel"
+			type="com.developer4droid.swipegallery.viewmodel.AlbumViewModel"
 			/>
 	</data>
 
@@ -16,7 +16,10 @@
 		android:id="@+id/main_frame"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:layout_margin="8dp"
+		android:layout_marginLeft="8dp"
+		android:layout_marginRight="8dp"
+		android:layout_marginTop="4dp"
+		android:layout_marginBottom="4dp"
 		>
 
 		<!--CardView for Image-->

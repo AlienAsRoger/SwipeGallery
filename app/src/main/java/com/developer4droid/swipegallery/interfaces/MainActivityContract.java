@@ -1,6 +1,6 @@
 package com.developer4droid.swipegallery.interfaces;
 
-import com.developer4droid.swipegallery.model.ImageItem;
+import com.developer4droid.swipegallery.model.AlbumItem;
 
 import java.util.List;
 
@@ -13,12 +13,12 @@ import java.util.List;
 
 public interface MainActivityContract {
 
-	interface ViewFrame{
+	interface ViewFrame {
 
-		void updateAdapter(List<ImageItem> itemList);
+		void updateAdapter(List<AlbumItem> itemList);
 	}
 
-	interface ActionListener{
+	interface ActionListener {
 		void onResume(ViewFrame viewFrame);
 	}
 

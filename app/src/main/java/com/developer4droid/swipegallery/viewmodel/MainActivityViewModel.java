@@ -1,12 +1,12 @@
 package com.developer4droid.swipegallery.viewmodel;
 
 import android.databinding.Bindable;
-import com.android.databinding.library.baseAdapters.BR;
+import com.developer4droid.swipegallery.BR;
+import com.developer4droid.swipegallery.application.MyApplication;
 import com.developer4droid.swipegallery.dataloading.interfaces.AssetLoader;
 import com.developer4droid.swipegallery.interfaces.LoadListener;
 import com.developer4droid.swipegallery.interfaces.MainActivityContract;
-import com.developer4droid.swipegallery.application.MyApplication;
-import com.developer4droid.swipegallery.model.ImageItem;
+import com.developer4droid.swipegallery.model.AlbumItem;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -40,7 +40,7 @@ public class MainActivityViewModel extends BaseViewModel implements MainActivity
 	}
 
 	@Override
-	public void onDataLoaded(List<ImageItem> itemList) {
+	public void onDataLoaded(List<AlbumItem> itemList) {
 		setLoading(false);
 		viewFrame.updateAdapter(itemList);
 	}

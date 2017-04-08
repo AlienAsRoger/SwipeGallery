@@ -4,7 +4,7 @@ import android.databinding.Bindable;
 import com.android.databinding.library.baseAdapters.BR;
 import com.developer4droid.swipegallery.adapter.ImageRecyclerAdapter;
 import com.developer4droid.swipegallery.application.MyApplication;
-import com.developer4droid.swipegallery.model.ImageItem;
+import com.developer4droid.swipegallery.model.AlbumItem;
 
 /**
  * Created with IntelliJ IDEA.
@@ -13,18 +13,18 @@ import com.developer4droid.swipegallery.model.ImageItem;
  * Time: 18:49
  */
 
-public class MainImageViewModel extends BaseViewModel {
+public class AlbumViewModel extends BaseViewModel {
 
 	private String label;
-	private ImageItem item;
+	private AlbumItem item;
 
-	public MainImageViewModel() {
+	public AlbumViewModel() {
 		MyApplication.getInstance().getGlobalComponent().inject(this);
 	}
 
-	public void setItem(ImageItem item, ImageRecyclerAdapter.ImageLoader imageLoader) {
+	public void setItem(AlbumItem item, ImageRecyclerAdapter.ImageLoader imageLoader) {
 		this.item = item;
-		setLabel(item.getLabel());
+		setLabel(item.getName());
 		imageLoader.loadImage(item.getImageUri());
 	}
 

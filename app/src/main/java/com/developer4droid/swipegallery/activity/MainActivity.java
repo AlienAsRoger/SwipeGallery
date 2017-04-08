@@ -5,14 +5,13 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.developer4droid.swipegallery.R;
 import com.developer4droid.swipegallery.adapter.ImageRecyclerAdapter;
 import com.developer4droid.swipegallery.databinding.ActivityMainBinding;
 import com.developer4droid.swipegallery.interfaces.MainActivityContract;
-import com.developer4droid.swipegallery.model.ImageItem;
+import com.developer4droid.swipegallery.model.AlbumItem;
 import com.developer4droid.swipegallery.viewmodel.MainActivityViewModel;
 
 import java.util.List;
@@ -74,7 +73,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityContr
 	// ------------------------ //
 
 	@Override
-	public void updateAdapter(List<ImageItem> itemList) {
+	public void updateAdapter(List<AlbumItem> itemList) {
 		adapter.updateItems(itemList);
 	}
 }

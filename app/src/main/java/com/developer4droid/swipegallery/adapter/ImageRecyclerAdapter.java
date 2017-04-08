@@ -8,8 +8,8 @@ import android.view.ViewGroup;
 import com.bumptech.glide.Glide;
 import com.developer4droid.swipegallery.R;
 import com.developer4droid.swipegallery.databinding.MainImageRowViewBinding;
-import com.developer4droid.swipegallery.model.ImageItem;
-import com.developer4droid.swipegallery.viewmodel.MainImageViewModel;
+import com.developer4droid.swipegallery.model.AlbumItem;
+import com.developer4droid.swipegallery.viewmodel.AlbumViewModel;
 
 import java.util.List;
 
@@ -28,13 +28,13 @@ public class ImageRecyclerAdapter extends RecyclerView.Adapter<ImageRecyclerAdap
 		void loadImage(String uri);
 	}
 
-	private List<ImageItem> itemList;
+	private List<AlbumItem> itemList;
 
-	public ImageRecyclerAdapter(List<ImageItem> itemList) {
+	public ImageRecyclerAdapter(List<AlbumItem> itemList) {
 		this.itemList = itemList;
 	}
 
-	public void updateItems(List<ImageItem> itemList) {
+	public void updateItems(List<AlbumItem> itemList) {
 		this.itemList = itemList;
 		notifyDataSetChanged();
 	}
@@ -43,7 +43,7 @@ public class ImageRecyclerAdapter extends RecyclerView.Adapter<ImageRecyclerAdap
 	public ImageViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 		LayoutInflater inflater = LayoutInflater.from(parent.getContext());
 		View itemView = inflater.inflate(R.layout.main_image_row_view, parent, false);
-		MainImageViewModel viewModel = new MainImageViewModel();
+		AlbumViewModel viewModel = new AlbumViewModel();
 		MainImageRowViewBinding binding = MainImageRowViewBinding.bind(itemView);
 		binding.setImage(viewModel);
 
@@ -61,16 +61,16 @@ public class ImageRecyclerAdapter extends RecyclerView.Adapter<ImageRecyclerAdap
 	}
 
 	public static class ImageViewHolder extends RecyclerView.ViewHolder implements ImageLoader{
-		MainImageViewModel viewModel;
+		AlbumViewModel viewModel;
 		MainImageRowViewBinding binding;
 
-		ImageViewHolder(View view, MainImageRowViewBinding binding, MainImageViewModel viewModel) {
+		ImageViewHolder(View view, MainImageRowViewBinding binding, AlbumViewModel viewModel) {
 			super(view);
 			this.viewModel = viewModel;
 			this.binding = binding;
 		}
 
-		void setItem(ImageItem item) {
+		void setItem(AlbumItem item) {
 			viewModel.setItem(item, this);
 			binding.executePendingBindings();
 		}
@@ -78,8 +78,8 @@ public class ImageRecyclerAdapter extends RecyclerView.Adapter<ImageRecyclerAdap
 		@Override
 		public void loadImage(String uri) {
 			Glide.with(binding.imageImg.getContext())
-//					.load(Uri.parse(uri))
-				.load(Uri.parse("file:///android_asset/Animals/1.jpg"))
+					.load(Uri.parse(uri))
+//				.load(Uri.parse("file:///android_asset/Images/Animals/1.jpg"))
 					.into(binding.imageImg);
 		}
 	}

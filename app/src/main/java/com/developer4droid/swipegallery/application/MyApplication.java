@@ -1,8 +1,9 @@
 package com.developer4droid.swipegallery.application;
 
 import android.app.Application;
-import com.developer4droid.swipegallery.di.components.GlobalComponent;
+import com.developer4droid.swipegallery.di.AppModule;
 import com.developer4droid.swipegallery.di.components.DaggerGlobalComponent;
+import com.developer4droid.swipegallery.di.components.GlobalComponent;
 
 /**
  * Created with IntelliJ IDEA.
@@ -21,7 +22,10 @@ public class MyApplication extends Application {
 		super.onCreate();
 
 		instance = this;
-		component = DaggerGlobalComponent.builder().build();
+
+		component = DaggerGlobalComponent.builder()
+				.appModule(new AppModule(this))
+				.build();
 	}
 
 	public static MyApplication getInstance() {

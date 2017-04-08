@@ -9,8 +9,11 @@ package com.developer4droid.swipegallery.model;
 
 public class ImageItem {
 	private String label;
-	private boolean stub;
 	private String imageUri;
+
+	public ImageItem(String label) {
+		this.label = label;
+	}
 
 	public String getLabel() {
 		return label;
@@ -18,20 +21,6 @@ public class ImageItem {
 
 	public void setLabel(String label) {
 		this.label = label;
-	}
-
-	public static ImageItem createStub() {
-		ImageItem imageItem = new ImageItem();
-		imageItem.setStub(true);
-		return imageItem;
-	}
-
-	public void setStub(boolean stub) {
-		this.stub = stub;
-	}
-
-	public boolean isStub() {
-		return stub;
 	}
 
 	public String getImageUri() {

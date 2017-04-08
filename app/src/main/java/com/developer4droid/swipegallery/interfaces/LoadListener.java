@@ -1,6 +1,6 @@
 package com.developer4droid.swipegallery.interfaces;
 
-import com.developer4droid.swipegallery.model.ImageItem;
+import com.developer4droid.swipegallery.model.AlbumItem;
 
 import java.util.List;
 
@@ -13,5 +13,5 @@ import java.util.List;
 
 public interface LoadListener {
 
-	void onDataLoaded(List<ImageItem> itemList);
+	void onDataLoaded(List<AlbumItem> itemList);
 }

@@ -1,4 +1,4 @@
-package com.developer4droid.swipegallery.swipegallery;
+package com.developer4droid.swipegallery;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

@@ -1,9 +1,10 @@
 package com.developer4droid.swipegallery.di.components;
 
-import com.developer4droid.swipegallery.di.NetModule;
+import com.developer4droid.swipegallery.dataloading.AssetLoaderImpl;
 import com.developer4droid.swipegallery.di.AppModule;
+import com.developer4droid.swipegallery.di.NetModule;
 import com.developer4droid.swipegallery.viewmodel.MainActivityViewModel;
-import com.developer4droid.swipegallery.viewmodel.MainImageViewModel;
+import com.developer4droid.swipegallery.viewmodel.AlbumViewModel;
 import dagger.Component;
 
 import javax.inject.Singleton;
@@ -24,5 +25,7 @@ public interface GlobalComponent {
 
 	void inject(MainActivityViewModel inject);
 	
-	void inject(MainImageViewModel inject);
+	void inject(AlbumViewModel inject);
+
+	void inject(AssetLoaderImpl inject);
 }
