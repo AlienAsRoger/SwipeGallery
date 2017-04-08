@@ -1,4 +1,4 @@
-package com.developer4droid.swipegallery.swipegallery.viewmodel;
+package com.developer4droid.swipegallery.viewmodel;
 
 import android.databinding.BaseObservable;
 

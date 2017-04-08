@@ -8,14 +8,15 @@
 
 		<variable
 			name="image"
-			type="com.developer4droid.swipegallery.swipegallery.viewmodel.MainImageViewModel"
+			type="com.developer4droid.swipegallery.viewmodel.MainImageViewModel"
 			/>
 	</data>
 
 	<FrameLayout
 		android:id="@+id/main_frame"
 		android:layout_width="match_parent"
-		android:layout_height="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_margin="8dp"
 		>
 
 		<!--CardView for Image-->
@@ -23,26 +24,34 @@
 			android:id="@+id/card_view"
 			android:layout_gravity="center"
 			android:layout_width="match_parent"
-			android:layout_height="match_parent"
+			android:layout_height="@dimen/image_height"
 			app:cardCornerRadius="4dp"
 			android:elevation="4dp"
 			tools:targetApi="lollipop"
-
 			>
 
 			<!--Image-->
 			<ImageView
+				android:id="@+id/image_img"
 				android:layout_width="match_parent"
 				android:layout_height="match_parent"
 				tools:src="@drawable/img_loading_image_stub"
+				android:scaleType="centerCrop"
 				/>
 
 			<!--Label-->
 			<TextView
 				android:id="@+id/info_text"
-				android:layout_width="match_parent"
-				android:layout_height="match_parent"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				style="@style/Label"
 				android:text="@{image.label}"
+				tools:text="Label"
+				android:layout_gravity="center"
+				android:paddingTop="@dimen/label_padding_bottom"
+				android:paddingBottom="@dimen/label_padding_bottom"
+				android:paddingLeft="@dimen/label_padding_side"
+				android:paddingRight="@dimen/label_padding_side"
 				/>
 
 		</android.support.v7.widget.CardView>

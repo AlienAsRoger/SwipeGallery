@@ -1,4 +1,4 @@
-package com.developer4droid.swipegallery.swipegallery.activity.entities;
+package com.developer4droid.swipegallery.model;
 
 /**
  * Created with IntelliJ IDEA.
@@ -10,6 +10,7 @@ package com.developer4droid.swipegallery.swipegallery.activity.entities;
 public class ImageItem {
 	private String label;
 	private boolean stub;
+	private String imageUri;
 
 	public String getLabel() {
 		return label;
@@ -31,5 +32,13 @@ public class ImageItem {
 
 	public boolean isStub() {
 		return stub;
+	}
+
+	public String getImageUri() {
+		return imageUri;
+	}
+
+	public void setImageUri(String imageUri) {
+		this.imageUri = imageUri;
 	}
 }

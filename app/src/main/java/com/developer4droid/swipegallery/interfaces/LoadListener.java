@@ -1,6 +1,6 @@
-package com.developer4droid.swipegallery.swipegallery.interfaces;
+package com.developer4droid.swipegallery.interfaces;
 
-import com.developer4droid.swipegallery.swipegallery.activity.entities.ImageItem;
+import com.developer4droid.swipegallery.model.ImageItem;
 
 import java.util.List;
 
