@@ -2,6 +2,7 @@ package com.developer4droid.swipegallery.swipegallery.viewmodel;
 
 import android.databinding.Bindable;
 import com.android.databinding.library.baseAdapters.BR;
+import com.developer4droid.swipegallery.swipegallery.activity.entities.ImageItem;
 
 /**
  * Created with IntelliJ IDEA.
@@ -13,10 +14,11 @@ import com.android.databinding.library.baseAdapters.BR;
 public class MainImageViewModel extends BaseViewModel {
 
 	private String label;
+	private ImageItem item;
 
-	public MainImageViewModel(String label) {
-		this.label = label;
-		this.label = "test";
+	public void setItem(ImageItem item) {
+		this.item = item;
+		label = item.getLabel();
 	}
 
 	@Bindable

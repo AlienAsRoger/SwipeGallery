@@ -1,11 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:tools="http://schemas.android.com/tools"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
-	android:id="@+id/recycler_view"
-	android:layout_width="match_parent"
-	android:layout_height="match_parent"
-	app:layout_behavior="@string/appbar_scrolling_view_behavior"
-	tools:showIn="@layout/activity_main"
-	tools:context="com.developer4droid.swipegallery.swipegallery.activity.MainActivity"
-	/>
+	>
+
+	<data>
+
+		<import
+			type="android.view.View"
+			alias="v"
+			/>
+
+		<variable
+			name="main"
+			type="com.developer4droid.swipegallery.swipegallery.viewmodel.MainActivityViewModel"
+			/>
+	</data>
+
+	<FrameLayout
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		>
+		<!--RecyclerView-->
+		<android.support.v7.widget.RecyclerView
+			android:id="@+id/recycler_view"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			app:layout_behavior="@string/appbar_scrolling_view_behavior"
+			tools:showIn="@layout/activity_main"
+			tools:listItem="@layout/main_image_row_view"
+			tools:context="com.developer4droid.swipegallery.swipegallery.activity.MainActivity"
+			android:visibility="@{main.loading? v.GONE : v.VISIBLE}"
+			tools:visibility="gone"
+			/>
+
+		<!--Loading View-->
+		<ProgressBar
+			android:id="@+id/loading_view"
+			style="@style/Base.Widget.AppCompat.ProgressBar"
+			android:indeterminate="true"
+			android:layout_width="48dp"
+			android:layout_height="48dp"
+			android:visibility="@{main.loading? v.VISIBLE : v.GONE}"
+			tools:visibility="visible"
+			android:layout_gravity="center"
+			/>
+	</FrameLayout>
+</layout>

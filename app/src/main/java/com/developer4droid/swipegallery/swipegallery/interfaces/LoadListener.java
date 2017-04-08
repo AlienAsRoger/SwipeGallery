@@ -8,18 +8,10 @@ import java.util.List;
  * Created with IntelliJ IDEA.
  * User: roger developer4droid@gmail.com
  * Date: 07.04.2017
- * Time: 19:08
+ * Time: 21:22
  */
 
-public interface MainActivityContract {
+public interface LoadListener {
 
-	interface ViewFrame{
-
-		void updateAdapter(List<ImageItem> itemList);
-	}
-
-	interface ActionListener{
-		void onResume(ViewFrame viewFrame);
-	}
-
+	void onDataLoaded(List<ImageItem> itemList);
 }
