@@ -3,7 +3,7 @@ package com.developer4droid.swipegallery.dataloading;
 import android.content.res.AssetManager;
 import android.os.AsyncTask;
 import com.developer4droid.swipegallery.Utils;
-import com.developer4droid.swipegallery.interfaces.LoadListener;
+import com.developer4droid.swipegallery.interfaces.AlbumLoadListener;
 import com.developer4droid.swipegallery.model.AlbumItem;
 import com.developer4droid.swipegallery.model.ImageItem;
 
@@ -20,17 +20,18 @@ import java.util.List;
  * Time: 7:37
  */
 
-public class AssetLoadingTask extends AsyncTask<AssetManager, Integer, List<AlbumItem>> {
+public class AlbumsLoadingTask extends AsyncTask<AssetManager, Integer, List<AlbumItem>> {
 
-	public static final String PNG = ".png";
-	public static final String JPG = ".jpg";
-	public static final String PATH_DELIMITER = File.separator;
-	private WeakReference<LoadListener> loadListener;
+	private static final String PNG = ".png";
+	private static final String JPG = ".jpg";
+	static final String PATH_DELIMITER = File.separator;
 	private static final String FILE_PATH = "file:///android_asset/";
-	private static final String ASSET_ROOT = "Images";
+	static final String ASSET_ROOT = "Images";
+
+	private WeakReference<AlbumLoadListener> loadListener;
 	private List<AlbumItem> albumList;
 
-	public AssetLoadingTask(LoadListener loadListener) {
+	AlbumsLoadingTask(AlbumLoadListener loadListener) {
 		this.loadListener = new WeakReference<>(loadListener);
 	}
 
@@ -42,7 +43,7 @@ public class AssetLoadingTask extends AsyncTask<AssetManager, Integer, List<Albu
 			// get list of albums
 			String[] list = assetManager.list(ASSET_ROOT);
 			for (String albumPath : list) {
-				listAssetFiles(ASSET_ROOT + PATH_DELIMITER + albumPath, assetManager);
+				addAlbumsAndImages(ASSET_ROOT + PATH_DELIMITER + albumPath, assetManager);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -51,7 +52,7 @@ public class AssetLoadingTask extends AsyncTask<AssetManager, Integer, List<Albu
 		return albumList;
 	}
 
-	private boolean listAssetFiles(String path, AssetManager assetManager) {
+	private boolean addAlbumsAndImages(String path, AssetManager assetManager) {
 
 		boolean filesExist = true;
 		String[] list;
@@ -60,12 +61,12 @@ public class AssetLoadingTask extends AsyncTask<AssetManager, Integer, List<Albu
 			if (list.length <= 0) {
 				return true;
 			}
-			
+
 			AlbumItem albumItem = new AlbumItem(Utils.getNameFromPath(path));
 			// set first image as album image
 			String firstFileName = list[0];
 			albumItem.setImageUri(getImageUri(path, firstFileName));
-			
+
 			List<ImageItem> imageList = new ArrayList<>();
 
 			for (String fileName : list) {
@@ -76,7 +77,7 @@ public class AssetLoadingTask extends AsyncTask<AssetManager, Integer, List<Albu
 					imageList.add(imageItem);
 				}
 
-				if (!listAssetFiles(path + PATH_DELIMITER + fileName, assetManager)) {
+				if (!addAlbumsAndImages(path + PATH_DELIMITER + fileName, assetManager)) {
 					filesExist = false;
 					break;
 				}
@@ -91,11 +92,11 @@ public class AssetLoadingTask extends AsyncTask<AssetManager, Integer, List<Albu
 		return filesExist;
 	}
 
-	private String getImageUri(String path, String firstFileName) {
+	static String getImageUri(String path, String firstFileName) {
 		return FILE_PATH + path + PATH_DELIMITER + firstFileName;
 	}
 
-	private boolean isFile(String fileName) {
+	static boolean isFile(String fileName) {
 		return fileName.contains(JPG) || fileName.contains(PNG);
 	}
 
@@ -103,7 +104,7 @@ public class AssetLoadingTask extends AsyncTask<AssetManager, Integer, List<Albu
 	protected void onPostExecute(List<AlbumItem> imageItems) {
 		super.onPostExecute(imageItems);
 
-		LoadListener listener = this.loadListener.get();
+		AlbumLoadListener listener = loadListener.get();
 		if (listener != null) {
 			listener.onDataLoaded(imageItems);
 		}

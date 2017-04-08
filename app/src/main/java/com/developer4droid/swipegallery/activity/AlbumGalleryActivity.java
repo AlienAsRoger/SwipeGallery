@@ -2,27 +2,29 @@ package com.developer4droid.swipegallery.activity;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.developer4droid.swipegallery.R;
-import com.developer4droid.swipegallery.adapter.ImageRecyclerAdapter;
+import com.developer4droid.swipegallery.adapter.AlbumRecyclerAdapter;
 import com.developer4droid.swipegallery.databinding.ActivityMainBinding;
-import com.developer4droid.swipegallery.interfaces.MainActivityContract;
+import com.developer4droid.swipegallery.events.OpenAlbumEvent;
+import com.developer4droid.swipegallery.interfaces.AlbumGalleryContract;
 import com.developer4droid.swipegallery.model.AlbumItem;
-import com.developer4droid.swipegallery.viewmodel.MainActivityViewModel;
+import com.developer4droid.swipegallery.viewmodel.AlbumGalleryViewModel;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements MainActivityContract.ViewFrame {
+public class AlbumGalleryActivity extends BaseActivity implements AlbumGalleryContract.ViewFrame {
 
 	@BindView(R.id.recycler_view)
 	RecyclerView recyclerView;
 
-	private ImageRecyclerAdapter adapter;
-	private MainActivityViewModel viewModel;
+	private AlbumRecyclerAdapter adapter;
+	private AlbumGalleryViewModel viewModel;
 	private ActivityMainBinding binding;
 
 	@Override
@@ -42,7 +44,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityContr
 	protected void onResume() {
 		super.onResume();
 
-		binding.setMain(viewModel);
+		binding.setAlbumGallery(viewModel);
 		// load data
 		viewModel.onResume(this);
 	}
@@ -55,8 +57,8 @@ public class MainActivity extends AppCompatActivity implements MainActivityContr
 	 * Init Adapter and ViewModel
 	 */
 	private void init() {
-		adapter = new ImageRecyclerAdapter(null);
-		viewModel = new MainActivityViewModel();
+		adapter = new AlbumRecyclerAdapter(null);
+		viewModel = new AlbumGalleryViewModel();
 	}
 
 	/**
@@ -64,7 +66,6 @@ public class MainActivity extends AppCompatActivity implements MainActivityContr
 	 */
 	private void initViews() {
 		recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
 		recyclerView.setAdapter(adapter);
 	}
 
@@ -75,5 +76,14 @@ public class MainActivity extends AppCompatActivity implements MainActivityContr
 	@Override
 	public void updateAdapter(List<AlbumItem> itemList) {
 		adapter.updateItems(itemList);
+	}
+
+	// --------- //
+	// Event Bus //
+	// --------- //
+
+	@Subscribe(threadMode = ThreadMode.MAIN)
+	public void onOpenAlbumEvent(OpenAlbumEvent event) {
+		startActivity(ImageGalleryActivity.createIntent(this, event.getAlbumName()));
 	}
 }

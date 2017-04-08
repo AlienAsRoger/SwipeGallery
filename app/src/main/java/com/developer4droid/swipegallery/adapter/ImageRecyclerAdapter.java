@@ -7,34 +7,29 @@ import android.view.View;
 import android.view.ViewGroup;
 import com.bumptech.glide.Glide;
 import com.developer4droid.swipegallery.R;
-import com.developer4droid.swipegallery.databinding.MainImageRowViewBinding;
-import com.developer4droid.swipegallery.model.AlbumItem;
-import com.developer4droid.swipegallery.viewmodel.AlbumViewModel;
+import com.developer4droid.swipegallery.databinding.ImageGalleryRowViewBinding;
+import com.developer4droid.swipegallery.dataloading.interfaces.ImageLoader;
+import com.developer4droid.swipegallery.model.ImageItem;
+import com.developer4droid.swipegallery.viewmodel.ImageViewModel;
 
 import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
  * User: roger developer4droid@gmail.com
- * Date: 07.04.2017
- * Time: 18:42
+ * Date: 08.04.2017
+ * Time: 12:17
  */
+
 public class ImageRecyclerAdapter extends RecyclerView.Adapter<ImageRecyclerAdapter.ImageViewHolder> {
 
-	/**
-	 * Interface to load image from VM to ImageView
-	 */
-	public interface ImageLoader{
-		void loadImage(String uri);
-	}
+	private List<ImageItem> itemList;
 
-	private List<AlbumItem> itemList;
-
-	public ImageRecyclerAdapter(List<AlbumItem> itemList) {
+	public ImageRecyclerAdapter(List<ImageItem> itemList) {
 		this.itemList = itemList;
 	}
 
-	public void updateItems(List<AlbumItem> itemList) {
+	public void updateItems(List<ImageItem> itemList) {
 		this.itemList = itemList;
 		notifyDataSetChanged();
 	}
@@ -42,9 +37,9 @@ public class ImageRecyclerAdapter extends RecyclerView.Adapter<ImageRecyclerAdap
 	@Override
 	public ImageViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 		LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-		View itemView = inflater.inflate(R.layout.main_image_row_view, parent, false);
-		AlbumViewModel viewModel = new AlbumViewModel();
-		MainImageRowViewBinding binding = MainImageRowViewBinding.bind(itemView);
+		View itemView = inflater.inflate(R.layout.image_gallery_row_view, parent, false);
+		ImageViewModel viewModel = new ImageViewModel();
+		ImageGalleryRowViewBinding binding = ImageGalleryRowViewBinding.bind(itemView);
 		binding.setImage(viewModel);
 
 		return new ImageViewHolder(itemView, binding, viewModel);
@@ -60,17 +55,17 @@ public class ImageRecyclerAdapter extends RecyclerView.Adapter<ImageRecyclerAdap
 		return itemList == null ? 0 : itemList.size();
 	}
 
-	public static class ImageViewHolder extends RecyclerView.ViewHolder implements ImageLoader{
-		AlbumViewModel viewModel;
-		MainImageRowViewBinding binding;
+	public static class ImageViewHolder extends RecyclerView.ViewHolder implements ImageLoader {
+		ImageViewModel viewModel;
+		ImageGalleryRowViewBinding binding;
 
-		ImageViewHolder(View view, MainImageRowViewBinding binding, AlbumViewModel viewModel) {
+		ImageViewHolder(View view, ImageGalleryRowViewBinding binding, ImageViewModel viewModel) {
 			super(view);
 			this.viewModel = viewModel;
 			this.binding = binding;
 		}
 
-		void setItem(AlbumItem item) {
+		void setItem(ImageItem item) {
 			viewModel.setItem(item, this);
 			binding.executePendingBindings();
 		}
@@ -79,7 +74,6 @@ public class ImageRecyclerAdapter extends RecyclerView.Adapter<ImageRecyclerAdap
 		public void loadImage(String uri) {
 			Glide.with(binding.imageImg.getContext())
 					.load(Uri.parse(uri))
-//				.load(Uri.parse("file:///android_asset/Images/Animals/1.jpg"))
 					.into(binding.imageImg);
 		}
 	}

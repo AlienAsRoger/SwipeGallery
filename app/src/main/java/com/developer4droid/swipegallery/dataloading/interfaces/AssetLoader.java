@@ -1,6 +1,7 @@
 package com.developer4droid.swipegallery.dataloading.interfaces;
 
-import com.developer4droid.swipegallery.interfaces.LoadListener;
+import com.developer4droid.swipegallery.interfaces.AlbumLoadListener;
+import com.developer4droid.swipegallery.interfaces.ImagesLoadListener;
 
 /**
  * Created with IntelliJ IDEA.
@@ -11,7 +12,8 @@ import com.developer4droid.swipegallery.interfaces.LoadListener;
 
 public interface AssetLoader {
 
-	void loadImages(LoadListener loadListener);
+	void loadAlbums(AlbumLoadListener loadListener);
 
+	void loadImagesFromAlbum(ImagesLoadListener loadListener, String albumName);
 
 }

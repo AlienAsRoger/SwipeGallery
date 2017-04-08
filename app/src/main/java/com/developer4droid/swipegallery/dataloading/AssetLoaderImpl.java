@@ -3,7 +3,8 @@ package com.developer4droid.swipegallery.dataloading;
 import android.app.Application;
 import com.developer4droid.swipegallery.application.MyApplication;
 import com.developer4droid.swipegallery.dataloading.interfaces.AssetLoader;
-import com.developer4droid.swipegallery.interfaces.LoadListener;
+import com.developer4droid.swipegallery.interfaces.AlbumLoadListener;
+import com.developer4droid.swipegallery.interfaces.ImagesLoadListener;
 
 import javax.inject.Inject;
 
@@ -24,7 +25,12 @@ public class AssetLoaderImpl implements AssetLoader {
 	}
 
 	@Override
-	public void loadImages(LoadListener loadListener) {
-		new AssetLoadingTask(loadListener).execute(application.getAssets());
+	public void loadAlbums(AlbumLoadListener loadListener) {
+		new AlbumsLoadingTask(loadListener).execute(application.getAssets());
+	}
+
+	@Override
+	public void loadImagesFromAlbum(ImagesLoadListener loadListener, String albumName) {
+		new ImagesLoadingTask(loadListener, albumName).execute(application.getAssets());
 	}
 }

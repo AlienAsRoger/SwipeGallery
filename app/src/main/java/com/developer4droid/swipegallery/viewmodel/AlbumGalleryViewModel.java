@@ -4,12 +4,14 @@ import android.databinding.Bindable;
 import com.developer4droid.swipegallery.BR;
 import com.developer4droid.swipegallery.application.MyApplication;
 import com.developer4droid.swipegallery.dataloading.interfaces.AssetLoader;
-import com.developer4droid.swipegallery.interfaces.LoadListener;
-import com.developer4droid.swipegallery.interfaces.MainActivityContract;
+import com.developer4droid.swipegallery.interfaces.AlbumLoadListener;
 import com.developer4droid.swipegallery.model.AlbumItem;
 
 import javax.inject.Inject;
 import java.util.List;
+
+import static com.developer4droid.swipegallery.interfaces.AlbumGalleryContract.ActionListener;
+import static com.developer4droid.swipegallery.interfaces.AlbumGalleryContract.ViewFrame;
 
 /**
  * Created with IntelliJ IDEA.
@@ -18,25 +20,25 @@ import java.util.List;
  * Time: 19:06
  */
 
-public class MainActivityViewModel extends BaseViewModel implements MainActivityContract.ActionListener, LoadListener {
+public class AlbumGalleryViewModel extends BaseViewModel implements ActionListener, AlbumLoadListener {
 
 	@Inject
 	AssetLoader assetLoader;
 
-	private MainActivityContract.ViewFrame viewFrame;
+	private ViewFrame viewFrame;
 	private boolean isLoading;
 
-	public MainActivityViewModel() {
+	public AlbumGalleryViewModel() {
 		MyApplication.getInstance().getGlobalComponent().inject(this);
 	}
 
 	@Override
-	public void onResume(MainActivityContract.ViewFrame viewFrame) {
+	public void onResume(ViewFrame viewFrame) {
 		this.viewFrame = viewFrame;
 
 		// load data
 		setLoading(true);
-		assetLoader.loadImages(this);
+		assetLoader.loadAlbums(this);
 	}
 
 	@Override

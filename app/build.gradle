@@ -19,8 +19,8 @@ android {
         }
     }
 
-    sourceSets{
-        main{
+    sourceSets {
+        main {
             assets.srcDirs = ['assets']
         }
     }
@@ -34,6 +34,7 @@ ext {
     play_services_version = '9.6.1'
     espresso_version = '2.2.2'
     dagger_version = '2.9'
+    butterknife_version = '8.5.1'
 }
 
 dependencies {
@@ -55,9 +56,13 @@ dependencies {
     provided 'javax.annotation:jsr250-api:1.0'
 
     // Butter knife
-    compile 'com.jakewharton:butterknife:8.5.1'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
+    compile "com.jakewharton:butterknife:$butterknife_version"
+    annotationProcessor "com.jakewharton:butterknife-compiler:$butterknife_version"
 
     // Glide
     compile 'com.github.bumptech.glide:glide:3.7.0'
+
+    // EventBus
+    compile 'org.greenrobot:eventbus:3.0.0'
+    compile 'com.android.support.constraint:constraint-layout:1.0.0-beta4'
 }

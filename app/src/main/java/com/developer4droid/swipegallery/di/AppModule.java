@@ -3,6 +3,7 @@ package com.developer4droid.swipegallery.di;
 import android.app.Application;
 import dagger.Module;
 import dagger.Provides;
+import org.greenrobot.eventbus.EventBus;
 
 import javax.inject.Singleton;
 
@@ -24,6 +25,12 @@ public class AppModule {
 	@Singleton
 	Application providesApplication() {
 		return application;
+	}
+
+	@Provides
+	@Singleton
+	EventBus provideEventBus() {
+		return EventBus.getDefault();
 	}
 
 }

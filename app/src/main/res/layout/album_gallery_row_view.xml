@@ -7,7 +7,7 @@
 	<data>
 
 		<variable
-			name="image"
+			name="album"
 			type="com.developer4droid.swipegallery.viewmodel.AlbumViewModel"
 			/>
 	</data>
@@ -31,6 +31,9 @@
 			app:cardCornerRadius="4dp"
 			android:elevation="4dp"
 			tools:targetApi="lollipop"
+			android:clickable="true"
+			android:focusable="true"
+			android:onClick="@{() -> album.openAlbum()}"
 			>
 
 			<!--Image-->
@@ -48,7 +51,7 @@
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				style="@style/Label"
-				android:text="@{image.label}"
+				android:text="@{album.label}"
 				tools:text="Label"
 				android:layout_gravity="center"
 				android:paddingTop="@dimen/label_padding_bottom"
