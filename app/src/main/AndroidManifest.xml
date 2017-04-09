@@ -32,7 +32,6 @@
 			android:label="@string/title_activity_image_gallery"
 			android:theme="@style/AppTheme"
 			/>
-		<activity android:name=".ui.activity.ImageGalleryPreviewActivity"></activity>
 	</application>
 
 </manifest>

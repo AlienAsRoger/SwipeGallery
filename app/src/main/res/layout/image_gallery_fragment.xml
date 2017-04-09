@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	>
+
+	<data>
+
+		<import
+			type="android.view.View"
+			alias="v"
+			/>
+
+		<variable
+			name="imageGallery"
+			type="com.developer4droid.swipegallery.ui.viewmodel.ImageGalleryViewModel"
+			/>
+	</data>
+
+	<FrameLayout
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:background="@color/white"
+		android:padding="8dp"
+		>
+
+		<!--Gallery View Pager-->
+		<android.support.v4.view.ViewPager
+			android:id="@+id/view_pager"
+			android:layout_width="match_parent"
+			android:layout_height="300dp"
+			android:visibility="@{imageGallery.loading? v.GONE : v.VISIBLE}"
+			/>
+
+		<!--Loading View-->
+		<ProgressBar
+			android:id="@+id/loading_view"
+			style="@style/Base.Widget.AppCompat.ProgressBar"
+			android:indeterminate="true"
+			android:layout_width="48dp"
+			android:layout_height="48dp"
+			tools:visibility="invisible"
+			android:visibility="@{imageGallery.loading? v.VISIBLE : v.GONE}"
+			android:layout_gravity="center"
+			/>
+
+	</FrameLayout>
+</layout>

@@ -4,6 +4,7 @@ import com.developer4droid.swipegallery.dataloading.AssetLoaderImpl;
 import com.developer4droid.swipegallery.injection.AppModule;
 import com.developer4droid.swipegallery.injection.NetModule;
 import com.developer4droid.swipegallery.ui.activity.BaseActivity;
+import com.developer4droid.swipegallery.ui.fragment.ImageGalleryPreviewFragment;
 import com.developer4droid.swipegallery.ui.view.LongPressImageView;
 import com.developer4droid.swipegallery.ui.viewmodel.*;
 import dagger.Component;
@@ -39,4 +40,6 @@ public interface GlobalComponent {
 	void inject(AssetLoaderImpl inject);
 
 	void inject(LongPressImageView inject);
+
+	void inject(ImageGalleryPreviewFragment inject);
 }

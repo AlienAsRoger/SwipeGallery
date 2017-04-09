@@ -60,4 +60,7 @@ public class ImageGalleryViewModel extends BaseViewModel implements ActionListen
 		notifyPropertyChanged(BR.loading);
 	}
 
+	public String getAlbumName() {
+		return albumName;
+	}
 }

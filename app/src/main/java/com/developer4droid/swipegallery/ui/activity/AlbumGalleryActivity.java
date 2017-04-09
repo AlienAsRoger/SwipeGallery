@@ -12,6 +12,7 @@ import com.developer4droid.swipegallery.events.OpenAlbumEvent;
 import com.developer4droid.swipegallery.events.OpenAlbumPreviewEvent;
 import com.developer4droid.swipegallery.model.AlbumItem;
 import com.developer4droid.swipegallery.ui.adapter.AlbumRecyclerAdapter;
+import com.developer4droid.swipegallery.ui.fragment.ImageGalleryPreviewFragment;
 import com.developer4droid.swipegallery.ui.interfaces.AlbumGalleryContract;
 import com.developer4droid.swipegallery.ui.viewmodel.AlbumGalleryViewModel;
 import org.greenrobot.eventbus.Subscribe;
@@ -20,6 +21,8 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.List;
 
 public class AlbumGalleryActivity extends BaseActivity implements AlbumGalleryContract.ViewFrame {
+
+	public static final String IMAGE_GALLERY_POPUP = "image_gallery_popup";
 
 	@BindView(R.id.recycler_view)
 	RecyclerView recyclerView;
@@ -92,7 +95,8 @@ public class AlbumGalleryActivity extends BaseActivity implements AlbumGalleryCo
 	@SuppressWarnings("unused")
 	@Subscribe(threadMode = ThreadMode.MAIN)
 	public void onEvent(OpenAlbumPreviewEvent event) {
-		startActivity(ImageGalleryPreviewActivity.createIntent(this, event.getAlbumName()));
+		ImageGalleryPreviewFragment fragment = ImageGalleryPreviewFragment.createInstance(event.getAlbumName());
+		fragment.show(getSupportFragmentManager(), IMAGE_GALLERY_POPUP);
 	}
 
 }
