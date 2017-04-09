@@ -3,6 +3,7 @@ package com.developer4droid.swipegallery.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -77,6 +78,10 @@ public class ImageGalleryActivity extends BaseActivity implements ImageGalleryCo
 	 */
 	private void initViews() {
 		setSupportActionBar(toolbar);
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		getSupportActionBar().setDisplayShowHomeEnabled(true);
+		// change color of back button
+		toolbar.getNavigationIcon().setColorFilter(getResources().getColor(R.color.grey), PorterDuff.Mode.SRC_IN);
 
 		recyclerView.setLayoutManager(new LinearLayoutManager(this));
 		recyclerView.setAdapter(adapter);
@@ -85,6 +90,13 @@ public class ImageGalleryActivity extends BaseActivity implements ImageGalleryCo
 	// ------------------------ //
 	// Interface Implementation //
 	// ------------------------ //
+
+
+	@Override
+	public boolean onSupportNavigateUp() {
+		onBackPressed();
+		return true;
+	}
 
 	@Override
 	public void updateAdapter(List<ImageItem> itemList) {
