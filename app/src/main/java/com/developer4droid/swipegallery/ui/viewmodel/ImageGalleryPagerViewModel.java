@@ -37,8 +37,12 @@ public class ImageGalleryPagerViewModel extends ImageGalleryViewModel {
 	@SuppressWarnings("unused")
 	@Subscribe(threadMode = ThreadMode.MAIN)
 	public void onEvent(SwipeImageEvent event) {
+		if (!event.getLabel().equals(getAlbumName())) {
+			return;
+		}
+		Log.d("TEST", "onEvent: album = " + getAlbumName());
 
-		if (event.getDirection() == SwipeImageEvent.RIGHT) {
+		if (event.getDirection() == SwipeImageEvent.LEFT) {
 			currentPosition++;
 		} else {
 			currentPosition--;
@@ -59,6 +63,9 @@ public class ImageGalleryPagerViewModel extends ImageGalleryViewModel {
 	@SuppressWarnings("unused")
 	@Subscribe(threadMode = ThreadMode.MAIN)
 	public void onEvent(CancelLongPressEvent event) {
+		if (!event.getLabel().equals(getAlbumName())) {
+			return;
+		}
 		if (!event.isFromDialog()) {
 			((ImageGalleryPagerContract.ViewFrame) viewFrame).dismissScreen();
 		}

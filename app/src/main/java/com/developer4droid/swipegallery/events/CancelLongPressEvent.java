@@ -13,8 +13,10 @@ public class CancelLongPressEvent {
 	 * Prevent loop interaction
 	 */
 	private boolean fromDialog;
+	private String label = "";
 
-	public CancelLongPressEvent() {
+	public CancelLongPressEvent(String label) {
+		this.label = label;
 		this.fromDialog = false;
 	}
 
@@ -28,5 +30,9 @@ public class CancelLongPressEvent {
 
 	public boolean isFromDialog() {
 		return fromDialog;
+	}
+
+	public String getLabel() {
+		return label;
 	}
 }

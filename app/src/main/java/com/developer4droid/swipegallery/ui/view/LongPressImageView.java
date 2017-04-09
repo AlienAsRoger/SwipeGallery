@@ -27,7 +27,7 @@ import javax.inject.Inject;
 public class LongPressImageView extends android.support.v7.widget.AppCompatImageView implements View.OnTouchListener {
 
 	private static final int THRESHOLD = 700; // delay between long press preview will appear
-	private static final float SWIPE_DETECT_OFFSET = 2;
+	private static final float SWIPE_DETECT_OFFSET = 20;
 
 	@Inject
 	EventBus eventBus;
@@ -95,23 +95,25 @@ public class LongPressImageView extends android.support.v7.widget.AppCompatImage
 
 	protected boolean onActionMove(MotionEvent event) {
 		float dragX = event.getX();
+//		Log.d("TEST", "onActionMove: delta = " + Math.abs(dragX - previousX));
 		if (Math.abs(dragX - previousX) > SWIPE_DETECT_OFFSET) {
 			if (dragX > previousX) {
-				Log.d("TEST", "onActionMove: move right");
-				eventBus.post(SwipeImageEvent.createRightEvent());
+				Log.d("TEST", "onActionMove: move right for = " + label);
+				eventBus.post(SwipeImageEvent.createRightEvent(label));
 			} else {
-				Log.d("TEST", "onActionMove: move left");
-				eventBus.post(SwipeImageEvent.createLeftEvent());
+				Log.d("TEST", "onActionMove: move left for = " + label);
+				eventBus.post(SwipeImageEvent.createLeftEvent(label));
 			}
+			previousX = event.getX();
 		}
 
-		previousX = event.getX();
 		return true;
 	}
 
 	protected boolean onActionCancel(MotionEvent event) {
+		handler.removeCallbacks(openPreviewRunnable);
 		Log.d("TEST", "onActionCancel: ");
-		eventBus.post(new CancelLongPressEvent());
+		eventBus.post(new CancelLongPressEvent(label));
 		return true;
 	}
 
@@ -134,7 +136,7 @@ public class LongPressImageView extends android.support.v7.widget.AppCompatImage
 		} else {
 			Log.d("TEST", "checkTouchTime: more than threshold");
 			// cancel long press action and all related stuff
-			eventBus.post(new CancelLongPressEvent());
+			eventBus.post(new CancelLongPressEvent(label));
 		}
 	}
 
