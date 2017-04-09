@@ -32,7 +32,7 @@ public interface GlobalComponent {
 	void inject(ImageGalleryViewModel inject);
 
 	void inject(BaseViewModel inject);
-	
+
 	void inject(AlbumViewModel inject);
 
 	void inject(ImageViewModel inject);

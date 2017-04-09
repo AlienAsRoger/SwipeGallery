@@ -91,7 +91,6 @@ public class ImageGalleryActivity extends BaseActivity implements ImageGalleryCo
 	// Interface Implementation //
 	// ------------------------ //
 
-
 	@Override
 	public boolean onSupportNavigateUp() {
 		onBackPressed();

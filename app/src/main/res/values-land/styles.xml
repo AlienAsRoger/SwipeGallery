@@ -1,0 +1,8 @@
+<resources>
+
+	<style name="DialogStyle" parent="Base.Theme.AppCompat.Dialog">
+		<item name="android:windowMinWidthMajor">50%</item>
+		<item name="android:windowMinWidthMinor">50%</item>
+	</style>
+
+</resources>

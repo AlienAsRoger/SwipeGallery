@@ -31,9 +31,6 @@
 			app:cardCornerRadius="4dp"
 			android:elevation="4dp"
 			tools:targetApi="lollipop"
-			android:clickable="true"
-			android:focusable="true"
-			android:background="#FF00F11F"
 			>
 
 			<!--Image-->

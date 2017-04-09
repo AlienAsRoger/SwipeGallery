@@ -8,6 +8,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.developer4droid.swipegallery.R;
 import com.developer4droid.swipegallery.databinding.ActivityMainBinding;
+import com.developer4droid.swipegallery.events.CancelLongPressEvent;
 import com.developer4droid.swipegallery.events.OpenAlbumEvent;
 import com.developer4droid.swipegallery.events.OpenAlbumPreviewEvent;
 import com.developer4droid.swipegallery.model.AlbumItem;
@@ -95,8 +96,16 @@ public class AlbumGalleryActivity extends BaseActivity implements AlbumGalleryCo
 	@SuppressWarnings("unused")
 	@Subscribe(threadMode = ThreadMode.MAIN)
 	public void onEvent(OpenAlbumPreviewEvent event) {
+		// don't intercept any touch events
+		recyclerView.setEnabled(false);
 		ImageGalleryPreviewFragment fragment = ImageGalleryPreviewFragment.createInstance(event.getAlbumName());
 		fragment.show(getSupportFragmentManager(), IMAGE_GALLERY_POPUP);
+	}
+
+	@SuppressWarnings("unused")
+	@Subscribe(threadMode = ThreadMode.MAIN)
+	public void onEvent(CancelLongPressEvent event) {
+		recyclerView.setEnabled(true);
 	}
 
 }

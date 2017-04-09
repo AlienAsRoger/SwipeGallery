@@ -11,6 +11,7 @@ import com.developer4droid.swipegallery.databinding.AlbumGalleryRowViewBinding;
 import com.developer4droid.swipegallery.dataloading.interfaces.ImageLoader;
 import com.developer4droid.swipegallery.model.AlbumItem;
 import com.developer4droid.swipegallery.ui.viewmodel.AlbumViewModel;
+import com.developer4droid.swipegallery.utils.Utils;
 
 import java.util.List;
 
@@ -58,10 +59,12 @@ public class AlbumRecyclerAdapter extends RecyclerView.Adapter<AlbumRecyclerAdap
 		AlbumViewModel viewModel;
 		AlbumGalleryRowViewBinding binding;
 
-		AlbumViewHolder(View view, AlbumGalleryRowViewBinding binding, AlbumViewModel viewModel) {
+		AlbumViewHolder(View view, final AlbumGalleryRowViewBinding binding, AlbumViewModel viewModel) {
 			super(view);
 			this.viewModel = viewModel;
 			this.binding = binding;
+
+			Utils.extendTouchArea(view, binding);
 		}
 
 		void setItem(AlbumItem item) {

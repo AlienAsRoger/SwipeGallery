@@ -1,5 +1,6 @@
 package com.developer4droid.swipegallery.ui.fragment;
 
+import android.content.DialogInterface;
 import android.databinding.DataBindingUtil;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -12,12 +13,16 @@ import android.view.ViewGroup;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.developer4droid.swipegallery.R;
+import com.developer4droid.swipegallery.application.MyApplication;
 import com.developer4droid.swipegallery.databinding.ImageGalleryFragmentBinding;
+import com.developer4droid.swipegallery.events.CancelLongPressEvent;
 import com.developer4droid.swipegallery.model.ImageItem;
 import com.developer4droid.swipegallery.ui.adapter.ImageGalleryPagerAdapter;
-import com.developer4droid.swipegallery.ui.interfaces.ImageGalleryContract;
-import com.developer4droid.swipegallery.ui.viewmodel.ImageGalleryViewModel;
+import com.developer4droid.swipegallery.ui.interfaces.ImageGalleryPagerContract;
+import com.developer4droid.swipegallery.ui.viewmodel.ImageGalleryPagerViewModel;
+import org.greenrobot.eventbus.EventBus;
 
+import javax.inject.Inject;
 import java.util.List;
 
 import static com.developer4droid.swipegallery.ui.activity.ImageGalleryActivity.ALBUM_NAME;
@@ -29,15 +34,22 @@ import static com.developer4droid.swipegallery.ui.activity.ImageGalleryActivity.
  * Time: 19:57
  */
 
-public class ImageGalleryPreviewFragment extends DialogFragment implements ImageGalleryContract.ViewFrame {
+public class ImageGalleryPreviewFragment extends DialogFragment implements ImageGalleryPagerContract.ViewFrame,
+		ViewPager.OnPageChangeListener {
 
+	@Inject
+	EventBus eventBus;
 
 	@BindView(R.id.view_pager)
 	ViewPager viewPager;
 
-	private ImageGalleryViewModel viewModel;
+	private ImageGalleryPagerViewModel viewModel;
 	private ImageGalleryFragmentBinding binding;
 	private ImageGalleryPagerAdapter adapter;
+
+	public ImageGalleryPreviewFragment() {
+		MyApplication.getInstance().getGlobalComponent().inject(this);
+	}
 
 	public static ImageGalleryPreviewFragment createInstance(String albumName) {
 		ImageGalleryPreviewFragment fragment = new ImageGalleryPreviewFragment();
@@ -51,7 +63,7 @@ public class ImageGalleryPreviewFragment extends DialogFragment implements Image
 	public void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		setStyle(STYLE_NO_FRAME, 0);
+		setStyle(STYLE_NO_TITLE, R.style.DialogStyle);
 
 		String albumName;
 		if (savedInstanceState != null) {
@@ -98,6 +110,13 @@ public class ImageGalleryPreviewFragment extends DialogFragment implements Image
 		outState.putString(ALBUM_NAME, viewModel.getAlbumName());
 	}
 
+	@Override
+	public void onDismiss(DialogInterface dialog) {
+		super.onDismiss(dialog);
+		eventBus.post(CancelLongPressEvent.fromInside());
+
+	}
+
 	// ------------- //
 	// Local methods //
 	// ------------- //
@@ -107,7 +126,7 @@ public class ImageGalleryPreviewFragment extends DialogFragment implements Image
 	 */
 	private void init(String albumName) {
 		adapter = new ImageGalleryPagerAdapter(null);
-		viewModel = new ImageGalleryViewModel(albumName);
+		viewModel = new ImageGalleryPagerViewModel(albumName);
 	}
 
 	/**
@@ -115,6 +134,7 @@ public class ImageGalleryPreviewFragment extends DialogFragment implements Image
 	 */
 	private void initViews() {
 		viewPager.setAdapter(adapter);
+		viewPager.addOnPageChangeListener(this);
 	}
 
 	// ------------------------ //
@@ -124,5 +144,30 @@ public class ImageGalleryPreviewFragment extends DialogFragment implements Image
 	@Override
 	public void updateAdapter(List<ImageItem> itemList) {
 		adapter.setItemsList(itemList);
+	}
+
+	@Override
+	public void setPage(int position) {
+		viewPager.setCurrentItem(position, true);
+	}
+
+	@Override
+	public void dismissScreen() {
+		dismiss();
+	}
+
+	@Override
+	public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+	}
+
+	@Override
+	public void onPageSelected(int position) {
+		viewModel.setCurrentPosition(position);
+	}
+
+	@Override
+	public void onPageScrollStateChanged(int state) {
+
 	}
 }

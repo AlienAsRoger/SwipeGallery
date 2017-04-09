@@ -4,8 +4,8 @@ import android.databinding.Bindable;
 import com.developer4droid.swipegallery.BR;
 import com.developer4droid.swipegallery.application.MyApplication;
 import com.developer4droid.swipegallery.dataloading.interfaces.AssetLoader;
-import com.developer4droid.swipegallery.ui.interfaces.ImagesLoadListener;
 import com.developer4droid.swipegallery.model.ImageItem;
+import com.developer4droid.swipegallery.ui.interfaces.ImagesLoadListener;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -25,9 +25,11 @@ public class ImageGalleryViewModel extends BaseViewModel implements ActionListen
 	@Inject
 	AssetLoader assetLoader;
 	
-	private ViewFrame viewFrame;
+	ViewFrame viewFrame;
 	private boolean isLoading;
-	private String albumName;
+	protected String albumName;
+	protected List<ImageItem> itemList;
+
 
 	public ImageGalleryViewModel(String albumName) {
 		this.albumName = albumName;
@@ -41,11 +43,11 @@ public class ImageGalleryViewModel extends BaseViewModel implements ActionListen
 		// load data
 		setLoading(true);
 		assetLoader.loadImagesFromAlbum(this, albumName);
-
 	}
 
 	@Override
 	public void onDataLoaded(List<ImageItem> itemList) {
+		this.itemList = itemList;
 		setLoading(false);
 		viewFrame.updateAdapter(itemList);
 	}
@@ -55,7 +57,7 @@ public class ImageGalleryViewModel extends BaseViewModel implements ActionListen
 		return isLoading;
 	}
 
-	private void setLoading(boolean loading) {
+	protected void setLoading(boolean loading) {
 		isLoading = loading;
 		notifyPropertyChanged(BR.loading);
 	}

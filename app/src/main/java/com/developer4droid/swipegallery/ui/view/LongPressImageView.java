@@ -10,7 +10,9 @@ import android.view.MotionEvent;
 import android.view.View;
 import com.developer4droid.swipegallery.R;
 import com.developer4droid.swipegallery.application.MyApplication;
+import com.developer4droid.swipegallery.events.CancelLongPressEvent;
 import com.developer4droid.swipegallery.events.LongPressImageViewEvent;
+import com.developer4droid.swipegallery.events.SwipeImageEvent;
 import org.greenrobot.eventbus.EventBus;
 
 import javax.inject.Inject;
@@ -24,12 +26,14 @@ import javax.inject.Inject;
 
 public class LongPressImageView extends android.support.v7.widget.AppCompatImageView implements View.OnTouchListener {
 
-	private static final int THRESHOLD = 1000; // 1 sec
+	private static final int THRESHOLD = 700; // delay between long press preview will appear
+	private static final float SWIPE_DETECT_OFFSET = 2;
 
 	@Inject
 	EventBus eventBus;
 
-	private float dragX;
+	private float previousX;
+
 	private Handler handler;
 	private String label;
 
@@ -43,7 +47,7 @@ public class LongPressImageView extends android.support.v7.widget.AppCompatImage
 		init(context, attrs);
 	}
 
-	private void init(Context context, AttributeSet attrs) {
+	protected void init(Context context, AttributeSet attrs) {
 		MyApplication.getInstance().getGlobalComponent().inject(this);
 
 		// get label from XML. In case of data binding doesn't work, so use BindingAdapter in Utils class
@@ -81,31 +85,38 @@ public class LongPressImageView extends android.support.v7.widget.AppCompatImage
 		}
 		return super.onTouchEvent(event);
 	}
-	private boolean onActionDown(MotionEvent event) {
-		long downTime = event.getDownTime();
-		Log.d("TEST", "onActionDown: down Timer = " + downTime);
 
+	protected boolean onActionDown(MotionEvent event) {
+		Log.d("TEST", "onActionDown: ");
 		// start timer
 		handler.postDelayed(openPreviewRunnable, THRESHOLD);
 		return true;
 	}
 
-	private boolean onActionMove(MotionEvent event) {
-		long downTime = event.getDownTime();
-		Log.d("TEST", "onActionMove: down Timer = " + downTime);
-		dragX = event.getX();
+	protected boolean onActionMove(MotionEvent event) {
+		float dragX = event.getX();
+		if (Math.abs(dragX - previousX) > SWIPE_DETECT_OFFSET) {
+			if (dragX > previousX) {
+				Log.d("TEST", "onActionMove: move right");
+				eventBus.post(SwipeImageEvent.createRightEvent());
+			} else {
+				Log.d("TEST", "onActionMove: move left");
+				eventBus.post(SwipeImageEvent.createLeftEvent());
+			}
+		}
+
+		previousX = event.getX();
 		return true;
 	}
 
-	private boolean onActionCancel(MotionEvent event) {
-		long downTime = event.getDownTime();
-		Log.d("TEST", "onActionCancel: down Timer = " + downTime);
+	protected boolean onActionCancel(MotionEvent event) {
+		Log.d("TEST", "onActionCancel: ");
+		eventBus.post(new CancelLongPressEvent());
 		return true;
 	}
 
-	private boolean onActionUp(MotionEvent event) {
-		long downTime = event.getDownTime();
-		Log.d("TEST", "onActionUp: down Timer = " + downTime);
+	protected boolean onActionUp(MotionEvent event) {
+		Log.d("TEST", "onActionUp: ");
 		checkTouchTime(event);
 		return true;
 	}
@@ -122,6 +133,8 @@ public class LongPressImageView extends android.support.v7.widget.AppCompatImage
 			callOnClick();
 		} else {
 			Log.d("TEST", "checkTouchTime: more than threshold");
+			// cancel long press action and all related stuff
+			eventBus.post(new CancelLongPressEvent());
 		}
 	}
 
