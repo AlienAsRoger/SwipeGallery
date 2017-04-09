@@ -2,8 +2,8 @@ package com.developer4droid.swipegallery.dataloading;
 
 import android.content.res.AssetManager;
 import android.os.AsyncTask;
-import com.developer4droid.swipegallery.Utils;
-import com.developer4droid.swipegallery.interfaces.AlbumLoadListener;
+import com.developer4droid.swipegallery.utils.Utils;
+import com.developer4droid.swipegallery.ui.interfaces.AlbumLoadListener;
 import com.developer4droid.swipegallery.model.AlbumItem;
 import com.developer4droid.swipegallery.model.ImageItem;
 

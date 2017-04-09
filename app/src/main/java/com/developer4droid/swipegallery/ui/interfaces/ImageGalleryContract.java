@@ -1,4 +1,4 @@
-package com.developer4droid.swipegallery.interfaces;
+package com.developer4droid.swipegallery.ui.interfaces;
 
 import com.developer4droid.swipegallery.model.ImageItem;
 

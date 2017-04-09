@@ -1,34 +1,36 @@
-package com.developer4droid.swipegallery.viewmodel;
+package com.developer4droid.swipegallery.ui.viewmodel;
 
 import android.databinding.Bindable;
 import com.developer4droid.swipegallery.BR;
 import com.developer4droid.swipegallery.application.MyApplication;
 import com.developer4droid.swipegallery.dataloading.interfaces.AssetLoader;
-import com.developer4droid.swipegallery.interfaces.AlbumLoadListener;
-import com.developer4droid.swipegallery.model.AlbumItem;
+import com.developer4droid.swipegallery.ui.interfaces.ImagesLoadListener;
+import com.developer4droid.swipegallery.model.ImageItem;
 
 import javax.inject.Inject;
 import java.util.List;
 
-import static com.developer4droid.swipegallery.interfaces.AlbumGalleryContract.ActionListener;
-import static com.developer4droid.swipegallery.interfaces.AlbumGalleryContract.ViewFrame;
+import static com.developer4droid.swipegallery.ui.interfaces.ImageGalleryContract.ActionListener;
+import static com.developer4droid.swipegallery.ui.interfaces.ImageGalleryContract.ViewFrame;
 
 /**
  * Created with IntelliJ IDEA.
  * User: roger developer4droid@gmail.com
- * Date: 07.04.2017
- * Time: 19:06
+ * Date: 08.04.2017
+ * Time: 11:50
  */
 
-public class AlbumGalleryViewModel extends BaseViewModel implements ActionListener, AlbumLoadListener {
+public class ImageGalleryViewModel extends BaseViewModel implements ActionListener, ImagesLoadListener {
 
 	@Inject
 	AssetLoader assetLoader;
-
+	
 	private ViewFrame viewFrame;
 	private boolean isLoading;
+	private String albumName;
 
-	public AlbumGalleryViewModel() {
+	public ImageGalleryViewModel(String albumName) {
+		this.albumName = albumName;
 		MyApplication.getInstance().getGlobalComponent().inject(this);
 	}
 
@@ -38,11 +40,12 @@ public class AlbumGalleryViewModel extends BaseViewModel implements ActionListen
 
 		// load data
 		setLoading(true);
-		assetLoader.loadAlbums(this);
+		assetLoader.loadImagesFromAlbum(this, albumName);
+
 	}
 
 	@Override
-	public void onDataLoaded(List<AlbumItem> itemList) {
+	public void onDataLoaded(List<ImageItem> itemList) {
 		setLoading(false);
 		viewFrame.updateAdapter(itemList);
 	}
@@ -56,4 +59,5 @@ public class AlbumGalleryViewModel extends BaseViewModel implements ActionListen
 		isLoading = loading;
 		notifyPropertyChanged(BR.loading);
 	}
+
 }

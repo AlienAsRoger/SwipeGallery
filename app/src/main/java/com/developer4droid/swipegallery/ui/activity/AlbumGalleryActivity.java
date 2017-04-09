@@ -1,4 +1,4 @@
-package com.developer4droid.swipegallery.activity;
+package com.developer4droid.swipegallery.ui.activity;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -7,12 +7,13 @@ import android.support.v7.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.developer4droid.swipegallery.R;
-import com.developer4droid.swipegallery.adapter.AlbumRecyclerAdapter;
 import com.developer4droid.swipegallery.databinding.ActivityMainBinding;
 import com.developer4droid.swipegallery.events.OpenAlbumEvent;
-import com.developer4droid.swipegallery.interfaces.AlbumGalleryContract;
+import com.developer4droid.swipegallery.events.OpenAlbumPreviewEvent;
 import com.developer4droid.swipegallery.model.AlbumItem;
-import com.developer4droid.swipegallery.viewmodel.AlbumGalleryViewModel;
+import com.developer4droid.swipegallery.ui.adapter.AlbumRecyclerAdapter;
+import com.developer4droid.swipegallery.ui.interfaces.AlbumGalleryContract;
+import com.developer4droid.swipegallery.ui.viewmodel.AlbumGalleryViewModel;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -82,8 +83,16 @@ public class AlbumGalleryActivity extends BaseActivity implements AlbumGalleryCo
 	// Event Bus //
 	// --------- //
 
+	@SuppressWarnings("unused")
 	@Subscribe(threadMode = ThreadMode.MAIN)
 	public void onOpenAlbumEvent(OpenAlbumEvent event) {
 		startActivity(ImageGalleryActivity.createIntent(this, event.getAlbumName()));
 	}
+
+	@SuppressWarnings("unused")
+	@Subscribe(threadMode = ThreadMode.MAIN)
+	public void onEvent(OpenAlbumPreviewEvent event) {
+		startActivity(ImageGalleryPreviewActivity.createIntent(this, event.getAlbumName()));
+	}
+
 }

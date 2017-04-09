@@ -1,4 +1,4 @@
-package com.developer4droid.swipegallery.viewmodel;
+package com.developer4droid.swipegallery.ui.viewmodel;
 
 import android.databinding.Bindable;
 import com.android.databinding.library.baseAdapters.BR;

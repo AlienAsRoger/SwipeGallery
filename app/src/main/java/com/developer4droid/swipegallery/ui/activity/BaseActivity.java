@@ -1,4 +1,4 @@
-package com.developer4droid.swipegallery.activity;
+package com.developer4droid.swipegallery.ui.activity;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -40,7 +40,9 @@ public abstract class BaseActivity extends AppCompatActivity {
 		eventBus.unregister(this);
 	}
 
-
+	/**
+	 * Stub. Required here to not throw exception that no method with @Subscribe annotation
+	 */
 	@Subscribe
 	public void onEvent(OpenAlbumEvent event) {
 	}

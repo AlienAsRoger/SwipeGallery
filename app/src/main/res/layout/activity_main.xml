@@ -13,7 +13,7 @@
 
 		<variable
 			name="albumGallery"
-			type="com.developer4droid.swipegallery.viewmodel.AlbumGalleryViewModel"
+			type="com.developer4droid.swipegallery.ui.viewmodel.AlbumGalleryViewModel"
 			/>
 	</data>
 

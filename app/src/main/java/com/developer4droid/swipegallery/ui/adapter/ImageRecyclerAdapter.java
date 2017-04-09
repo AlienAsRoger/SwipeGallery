@@ -1,4 +1,4 @@
-package com.developer4droid.swipegallery.adapter;
+package com.developer4droid.swipegallery.ui.adapter;
 
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
@@ -10,7 +10,7 @@ import com.developer4droid.swipegallery.R;
 import com.developer4droid.swipegallery.databinding.ImageGalleryRowViewBinding;
 import com.developer4droid.swipegallery.dataloading.interfaces.ImageLoader;
 import com.developer4droid.swipegallery.model.ImageItem;
-import com.developer4droid.swipegallery.viewmodel.ImageViewModel;
+import com.developer4droid.swipegallery.ui.viewmodel.ImageViewModel;
 
 import java.util.List;
 

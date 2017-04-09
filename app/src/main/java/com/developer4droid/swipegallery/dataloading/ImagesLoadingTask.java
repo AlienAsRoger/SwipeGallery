@@ -3,7 +3,7 @@ package com.developer4droid.swipegallery.dataloading;
 import android.content.res.AssetManager;
 import android.os.AsyncTask;
 import android.util.Log;
-import com.developer4droid.swipegallery.interfaces.ImagesLoadListener;
+import com.developer4droid.swipegallery.ui.interfaces.ImagesLoadListener;
 import com.developer4droid.swipegallery.model.ImageItem;
 
 import java.io.IOException;

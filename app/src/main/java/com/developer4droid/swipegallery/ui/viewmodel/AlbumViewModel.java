@@ -1,14 +1,15 @@
-package com.developer4droid.swipegallery.viewmodel;
+package com.developer4droid.swipegallery.ui.viewmodel;
 
 import android.databinding.Bindable;
 import com.android.databinding.library.baseAdapters.BR;
 import com.developer4droid.swipegallery.application.MyApplication;
 import com.developer4droid.swipegallery.dataloading.interfaces.ImageLoader;
+import com.developer4droid.swipegallery.events.LongPressImageViewEvent;
 import com.developer4droid.swipegallery.events.OpenAlbumEvent;
+import com.developer4droid.swipegallery.events.OpenAlbumPreviewEvent;
 import com.developer4droid.swipegallery.model.AlbumItem;
-import org.greenrobot.eventbus.EventBus;
-
-import javax.inject.Inject;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 /**
  * Created with IntelliJ IDEA.
@@ -18,9 +19,6 @@ import javax.inject.Inject;
  */
 
 public class AlbumViewModel extends BaseViewModel {
-
-	@Inject
-	EventBus eventBus;
 
 	private String label;
 
@@ -45,6 +43,18 @@ public class AlbumViewModel extends BaseViewModel {
 
 	public void openAlbum() {
 		eventBus.post(new OpenAlbumEvent(label));
+	}
+
+	// --------- //
+	// Event Bus //
+	// --------- //
+
+	@SuppressWarnings("unused")
+	@Subscribe(threadMode = ThreadMode.MAIN)
+	public void onEvent(LongPressImageViewEvent event) {
+		if (event.getLabel().equals(label)) {
+			eventBus.post(new OpenAlbumPreviewEvent(label));
+		}
 	}
 
 }

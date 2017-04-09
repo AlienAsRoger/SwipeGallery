@@ -12,9 +12,10 @@
 		android:supportsRtl="true"
 		android:theme="@style/AppTheme"
 		>
-		<!--Album Gallery  Activity-->
+
+		<!-- Album Gallery  Activity -->
 		<activity
-			android:name=".activity.AlbumGalleryActivity"
+			android:name=".ui.activity.AlbumGalleryActivity"
 			android:label="@string/app_name"
 			android:theme="@style/AppTheme.NoActionBar"
 			>
@@ -25,12 +26,13 @@
 			</intent-filter>
 		</activity>
 
-		<!--Image Gallery Activity-->
+		<!-- Image Gallery Activity -->
 		<activity
-			android:name=".activity.ImageGalleryActivity"
+			android:name=".ui.activity.ImageGalleryActivity"
 			android:label="@string/title_activity_image_gallery"
 			android:theme="@style/AppTheme"
 			/>
+		<activity android:name=".ui.activity.ImageGalleryPreviewActivity"></activity>
 	</application>
 
 </manifest>

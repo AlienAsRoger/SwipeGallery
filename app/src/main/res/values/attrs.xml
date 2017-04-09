@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<declare-styleable name="LongPressImageView">
+		<!--Album name will serve as unique id for click events-->
+		<attr name="albumName" format="string" />
+	</declare-styleable>
+
+</resources>

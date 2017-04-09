@@ -8,7 +8,7 @@
 
 		<variable
 			name="image"
-			type="com.developer4droid.swipegallery.viewmodel.ImageViewModel"
+			type="com.developer4droid.swipegallery.ui.viewmodel.ImageViewModel"
 			/>
 	</data>
 

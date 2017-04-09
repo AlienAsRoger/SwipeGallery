@@ -4,7 +4,7 @@
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	app:layout_behavior="@string/appbar_scrolling_view_behavior"
 	tools:showIn="@layout/activity_image_gallery"
-	tools:context="com.developer4droid.swipegallery.activity.ImageGalleryActivity"
+	tools:context="com.developer4droid.swipegallery.ui.activity.ImageGalleryActivity"
 	>
 
 	<data>
@@ -16,7 +16,7 @@
 
 		<variable
 			name="imageGallery"
-			type="com.developer4droid.swipegallery.viewmodel.ImageGalleryViewModel"
+			type="com.developer4droid.swipegallery.ui.viewmodel.ImageGalleryViewModel"
 			/>
 	</data>
 

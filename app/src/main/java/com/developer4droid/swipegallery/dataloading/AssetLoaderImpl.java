@@ -3,8 +3,8 @@ package com.developer4droid.swipegallery.dataloading;
 import android.app.Application;
 import com.developer4droid.swipegallery.application.MyApplication;
 import com.developer4droid.swipegallery.dataloading.interfaces.AssetLoader;
-import com.developer4droid.swipegallery.interfaces.AlbumLoadListener;
-import com.developer4droid.swipegallery.interfaces.ImagesLoadListener;
+import com.developer4droid.swipegallery.ui.interfaces.AlbumLoadListener;
+import com.developer4droid.swipegallery.ui.interfaces.ImagesLoadListener;
 
 import javax.inject.Inject;
 

@@ -1,4 +1,4 @@
-package com.developer4droid.swipegallery.di;
+package com.developer4droid.swipegallery.injection;
 
 import android.app.Application;
 import dagger.Module;

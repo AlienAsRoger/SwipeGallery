@@ -1,9 +1,9 @@
 package com.developer4droid.swipegallery.application;
 
 import android.app.Application;
-import com.developer4droid.swipegallery.di.AppModule;
-import com.developer4droid.swipegallery.di.components.DaggerGlobalComponent;
-import com.developer4droid.swipegallery.di.components.GlobalComponent;
+import com.developer4droid.swipegallery.injection.AppModule;
+import com.developer4droid.swipegallery.injection.components.DaggerGlobalComponent;
+import com.developer4droid.swipegallery.injection.components.GlobalComponent;
 
 /**
  * Created with IntelliJ IDEA.

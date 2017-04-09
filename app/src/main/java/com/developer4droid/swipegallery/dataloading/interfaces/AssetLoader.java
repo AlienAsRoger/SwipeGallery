@@ -1,7 +1,7 @@
 package com.developer4droid.swipegallery.dataloading.interfaces;
 
-import com.developer4droid.swipegallery.interfaces.AlbumLoadListener;
-import com.developer4droid.swipegallery.interfaces.ImagesLoadListener;
+import com.developer4droid.swipegallery.ui.interfaces.AlbumLoadListener;
+import com.developer4droid.swipegallery.ui.interfaces.ImagesLoadListener;
 
 /**
  * Created with IntelliJ IDEA.

@@ -8,7 +8,7 @@
 
 		<variable
 			name="album"
-			type="com.developer4droid.swipegallery.viewmodel.AlbumViewModel"
+			type="com.developer4droid.swipegallery.ui.viewmodel.AlbumViewModel"
 			/>
 	</data>
 
@@ -37,12 +37,14 @@
 			>
 
 			<!--Image-->
-			<ImageView
+			<com.developer4droid.swipegallery.ui.view.LongPressImageView
 				android:id="@+id/image_img"
 				android:layout_width="match_parent"
 				android:layout_height="match_parent"
 				tools:src="@drawable/img_loading_image_stub"
 				android:scaleType="centerCrop"
+				android:onClick="@{() -> album.openAlbum()}"
+				app:albumName="@{album.label}"
 				/>
 
 			<!--Label-->

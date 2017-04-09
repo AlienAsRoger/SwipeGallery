@@ -13,14 +13,14 @@
 
 		<variable
 			name="imageGallery"
-			type="com.developer4droid.swipegallery.viewmodel.ImageGalleryViewModel"
+			type="com.developer4droid.swipegallery.ui.viewmodel.ImageGalleryViewModel"
 			/>
 	</data>
 
 	<android.support.design.widget.CoordinatorLayout
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
-		tools:context="com.developer4droid.swipegallery.activity.ImageGalleryActivity"
+		tools:context="com.developer4droid.swipegallery.ui.activity.ImageGalleryActivity"
 		>
 
 		<android.support.design.widget.AppBarLayout

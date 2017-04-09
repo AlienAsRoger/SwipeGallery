@@ -1,4 +1,4 @@
-package com.developer4droid.swipegallery.di;
+package com.developer4droid.swipegallery.injection;
 
 import com.developer4droid.swipegallery.dataloading.AssetLoaderImpl;
 import com.developer4droid.swipegallery.dataloading.interfaces.AssetLoader;
