@@ -36,7 +36,7 @@ public class Utils {
 		view.setAlbumLabel(label);
 	}
 
-	public static void extendTouchArea(View view, final AlbumGalleryRowViewBinding binding) {
+	public static void extendTouchArea(final View view, final AlbumGalleryRowViewBinding binding) {
 		view.post(new Runnable() {
 			// Post in the parent's message queue to make sure the parent
 			// lays out its children before you call getHitRect()
@@ -68,6 +68,7 @@ public class Utils {
 				if (View.class.isInstance(imageView.getParent())) {
 					((View) imageView.getParent()).setTouchDelegate(touchDelegate);
 				}
+				view.setTouchDelegate(touchDelegate);
 			}
 		});
 	}

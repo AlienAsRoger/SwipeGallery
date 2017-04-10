@@ -87,7 +87,6 @@ public class LongPressImageView extends android.support.v7.widget.AppCompatImage
 	}
 
 	protected boolean onActionDown(MotionEvent event) {
-		Log.d("TEST", "onActionDown: ");
 		// start timer
 		handler.postDelayed(openPreviewRunnable, THRESHOLD);
 		return true;
@@ -95,13 +94,10 @@ public class LongPressImageView extends android.support.v7.widget.AppCompatImage
 
 	protected boolean onActionMove(MotionEvent event) {
 		float dragX = event.getX();
-//		Log.d("TEST", "onActionMove: delta = " + Math.abs(dragX - previousX));
 		if (Math.abs(dragX - previousX) > SWIPE_DETECT_OFFSET) {
 			if (dragX > previousX) {
-				Log.d("TEST", "onActionMove: move right for = " + label);
 				eventBus.post(SwipeImageEvent.createRightEvent(label));
 			} else {
-				Log.d("TEST", "onActionMove: move left for = " + label);
 				eventBus.post(SwipeImageEvent.createLeftEvent(label));
 			}
 			previousX = event.getX();
@@ -112,13 +108,14 @@ public class LongPressImageView extends android.support.v7.widget.AppCompatImage
 
 	protected boolean onActionCancel(MotionEvent event) {
 		handler.removeCallbacks(openPreviewRunnable);
-		Log.d("TEST", "onActionCancel: ");
 		eventBus.post(new CancelLongPressEvent(label));
+
+		// don't allow parent to call onCancel for me
+		getParent().requestDisallowInterceptTouchEvent(false);
 		return true;
 	}
 
 	protected boolean onActionUp(MotionEvent event) {
-		Log.d("TEST", "onActionUp: ");
 		checkTouchTime(event);
 		return true;
 	}
@@ -130,13 +127,14 @@ public class LongPressImageView extends android.support.v7.widget.AppCompatImage
 		long downTime = event.getDownTime();
 		long eventTime = event.getEventTime();
 		if (eventTime - downTime < THRESHOLD) {
-			Log.d("TEST", "checkTouchTime: call onclick");
 			handler.removeCallbacks(openPreviewRunnable);
 			callOnClick();
 		} else {
-			Log.d("TEST", "checkTouchTime: more than threshold");
 			// cancel long press action and all related stuff
 			eventBus.post(new CancelLongPressEvent(label));
+
+			// don't allow parent to call onCancel for me
+			getParent().requestDisallowInterceptTouchEvent(false);
 		}
 	}
 
@@ -147,8 +145,8 @@ public class LongPressImageView extends android.support.v7.widget.AppCompatImage
 		@Override
 		public void run() {
 			handler.removeCallbacks(this);
-			Log.d("TEST", "run: fire LongPressImageViewEvent");
 			eventBus.post(new LongPressImageViewEvent(label));
+			getParent().requestDisallowInterceptTouchEvent(true);
 		}
 	};
 
