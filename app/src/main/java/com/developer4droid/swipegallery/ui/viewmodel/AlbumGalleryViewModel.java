@@ -27,6 +27,7 @@ public class AlbumGalleryViewModel extends BaseViewModel implements ActionListen
 
 	private ViewFrame viewFrame;
 	private boolean isLoading;
+	private List<AlbumItem> itemList;
 
 	public AlbumGalleryViewModel() {
 		MyApplication.getInstance().getGlobalComponent().inject(this);
@@ -36,13 +37,16 @@ public class AlbumGalleryViewModel extends BaseViewModel implements ActionListen
 	public void onResume(ViewFrame viewFrame) {
 		this.viewFrame = viewFrame;
 
-		// load data
-		setLoading(true);
-		assetLoader.loadAlbums(this);
+		// load data only if we hadn't loaded yet
+		if (itemList == null) {
+			setLoading(true);
+			assetLoader.loadAlbums(this);
+		}
 	}
 
 	@Override
 	public void onDataLoaded(List<AlbumItem> itemList) {
+		this.itemList = itemList;
 		setLoading(false);
 		viewFrame.updateAdapter(itemList);
 	}

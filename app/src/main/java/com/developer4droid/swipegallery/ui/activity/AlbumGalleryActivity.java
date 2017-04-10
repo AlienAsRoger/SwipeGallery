@@ -1,9 +1,16 @@
 package com.developer4droid.swipegallery.ui.activity;
 
+import android.annotation.TargetApi;
+import android.app.ActivityOptions;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.view.ViewTreeObserver;
+import android.widget.ImageView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.developer4droid.swipegallery.R;
@@ -16,14 +23,22 @@ import com.developer4droid.swipegallery.ui.adapter.AlbumRecyclerAdapter;
 import com.developer4droid.swipegallery.ui.fragment.ImageGalleryPreviewFragment;
 import com.developer4droid.swipegallery.ui.interfaces.AlbumGalleryContract;
 import com.developer4droid.swipegallery.ui.viewmodel.AlbumGalleryViewModel;
+import com.developer4droid.swipegallery.utils.Utils;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 
+import static com.developer4droid.swipegallery.ui.adapter.AlbumRecyclerAdapter.AlbumViewHolder;
+import static com.developer4droid.swipegallery.utils.Utils.EXTRA_CURRENT_ALBUM_POSITION;
+import static com.developer4droid.swipegallery.utils.Utils.EXTRA_STARTING_ALBUM_POSITION;
+
 public class AlbumGalleryActivity extends BaseActivity implements AlbumGalleryContract.ViewFrame {
 
 	public static final String IMAGE_GALLERY_POPUP = "image_gallery_popup";
+
+
+
 
 	@BindView(R.id.recycler_view)
 	RecyclerView recyclerView;
@@ -31,6 +46,9 @@ public class AlbumGalleryActivity extends BaseActivity implements AlbumGalleryCo
 	private AlbumRecyclerAdapter adapter;
 	private AlbumGalleryViewModel viewModel;
 	private ActivityMainBinding binding;
+
+	private Bundle reenterState;
+	private boolean isImageGalleryActivityStarted;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +70,34 @@ public class AlbumGalleryActivity extends BaseActivity implements AlbumGalleryCo
 		binding.setAlbumGallery(viewModel);
 		// load data
 		viewModel.onResume(this);
+
+		isImageGalleryActivityStarted = false;
+	}
+
+	@Override
+	public void onActivityReenter(int requestCode, Intent data) {
+		super.onActivityReenter(requestCode, data);
+
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+			// adjust re-enter transition animation
+			reenterState = new Bundle(data.getExtras());
+			int startingPosition = reenterState.getInt(EXTRA_STARTING_ALBUM_POSITION);
+			int currentPosition = reenterState.getInt(EXTRA_CURRENT_ALBUM_POSITION);
+			if (startingPosition != currentPosition) {
+				recyclerView.scrollToPosition(currentPosition);
+			}
+			postponeEnterTransition();
+			recyclerView.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+				@TargetApi(Build.VERSION_CODES.LOLLIPOP)
+				@Override
+				public boolean onPreDraw() {
+					recyclerView.getViewTreeObserver().removeOnPreDrawListener(this);
+					recyclerView.requestLayout();
+					startPostponedEnterTransition();
+					return true;
+				}
+			});
+		}
 	}
 
 	// ------------- //
@@ -64,6 +110,11 @@ public class AlbumGalleryActivity extends BaseActivity implements AlbumGalleryCo
 	private void init() {
 		adapter = new AlbumRecyclerAdapter(null);
 		viewModel = new AlbumGalleryViewModel();
+
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+			String newTransitionName = getString(R.string.transition_tag1);
+			Utils.createReenterTransition(this, recyclerView, reenterState, newTransitionName);
+		}
 	}
 
 	/**
@@ -90,7 +141,24 @@ public class AlbumGalleryActivity extends BaseActivity implements AlbumGalleryCo
 	@SuppressWarnings("unused")
 	@Subscribe(threadMode = ThreadMode.MAIN)
 	public void onOpenAlbumEvent(OpenAlbumEvent event) {
-		startActivity(ImageGalleryActivity.createIntent(this, event.getAlbumName()));
+
+		Intent intent = ImageGalleryActivity.createIntent(this, event.getAlbumName());
+		if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+			if (!isImageGalleryActivityStarted) {
+				isImageGalleryActivityStarted = true;
+
+				int position = adapter.getPositionByLabel(event.getAlbumName());
+				View view = recyclerView.getLayoutManager().findViewByPosition(position);
+				AlbumViewHolder viewHolder = (AlbumViewHolder) recyclerView.getChildViewHolder(view);
+
+				ImageView imageView = viewHolder.getImageView();
+
+				String tag = getString(R.string.transition_tag1);
+				startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this, imageView, tag).toBundle());
+			}
+		} else {
+			startActivity(intent);
+		}
 	}
 
 	@SuppressWarnings("unused")

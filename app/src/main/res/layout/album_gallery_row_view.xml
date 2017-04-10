@@ -45,6 +45,7 @@
 				android:scaleType="centerCrop"
 				android:onClick="@{() -> album.openAlbum()}"
 				app:albumName="@{album.label}"
+				android:transitionName="@string/transition_tag1"
 				/>
 
 			<!--Label-->

@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.developer4droid.swipegallery.R;
 import com.developer4droid.swipegallery.databinding.AlbumGalleryRowViewBinding;
@@ -55,6 +56,16 @@ public class AlbumRecyclerAdapter extends RecyclerView.Adapter<AlbumRecyclerAdap
 		return itemList == null ? 0 : itemList.size();
 	}
 
+	public int getPositionByLabel(String albumName) {
+		for (int pos = 0; pos < itemList.size(); pos++) {
+			AlbumItem albumItem = itemList.get(pos);
+			if (albumItem.getName().equals(albumName)) {
+				return pos;
+			}
+		}
+		return 0;
+	}
+
 	public static class AlbumViewHolder extends RecyclerView.ViewHolder implements ImageLoader {
 		AlbumViewModel viewModel;
 		AlbumGalleryRowViewBinding binding;
@@ -77,6 +88,10 @@ public class AlbumRecyclerAdapter extends RecyclerView.Adapter<AlbumRecyclerAdap
 			Glide.with(binding.imageImg.getContext())
 					.load(Uri.parse(uri))
 					.into(binding.imageImg);
+		}
+
+		public ImageView getImageView() {
+			return binding.imageImg;
 		}
 	}
 

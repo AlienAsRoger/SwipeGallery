@@ -26,8 +26,8 @@ import javax.inject.Inject;
 
 public class LongPressImageView extends android.support.v7.widget.AppCompatImageView implements View.OnTouchListener {
 
-	private static final int THRESHOLD = 700; // delay between long press preview will appear
-	private static final float SWIPE_DETECT_OFFSET = 20;
+	private static final int THRESHOLD = 500; // delay between long press preview will appear
+	private static final float SWIPE_DETECT_OFFSET = 30;
 
 	@Inject
 	EventBus eventBus;
