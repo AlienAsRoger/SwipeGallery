@@ -11,10 +11,10 @@ import android.support.v7.widget.Toolbar;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.developer4droid.swipegallery.R;
-import com.developer4droid.swipegallery.ui.adapter.ImageRecyclerAdapter;
 import com.developer4droid.swipegallery.databinding.ActivityImageGalleryBinding;
-import com.developer4droid.swipegallery.ui.interfaces.ImageGalleryContract;
 import com.developer4droid.swipegallery.model.ImageItem;
+import com.developer4droid.swipegallery.ui.adapter.ImageRecyclerAdapter;
+import com.developer4droid.swipegallery.ui.interfaces.ImageGalleryContract;
 import com.developer4droid.swipegallery.ui.viewmodel.ImageGalleryViewModel;
 
 import java.util.List;

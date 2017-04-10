@@ -40,7 +40,6 @@ public class ImageGalleryPagerViewModel extends ImageGalleryViewModel {
 		if (!event.getLabel().equals(getAlbumName())) {
 			return;
 		}
-		Log.d("TEST", "onEvent: album = " + getAlbumName());
 
 		if (event.getDirection() == SwipeImageEvent.LEFT) {
 			currentPosition++;
@@ -55,7 +54,6 @@ public class ImageGalleryPagerViewModel extends ImageGalleryViewModel {
 			currentPosition = itemList.size() - 1;
 		}
 
-		Log.d("TEST", "onEvent: cur pos = " + currentPosition);
 		((ImageGalleryPagerContract.ViewFrame) viewFrame).setPage(currentPosition);
 	}
 

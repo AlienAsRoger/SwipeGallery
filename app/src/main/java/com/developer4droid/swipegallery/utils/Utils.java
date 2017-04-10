@@ -1,21 +1,14 @@
 package com.developer4droid.swipegallery.utils;
 
-import android.annotation.TargetApi;
-import android.app.Activity;
-import android.app.SharedElementCallback;
 import android.databinding.BindingAdapter;
 import android.graphics.Rect;
 import android.net.Uri;
-import android.os.Build;
-import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
 import android.view.TouchDelegate;
 import android.view.View;
 import com.developer4droid.swipegallery.databinding.AlbumGalleryRowViewBinding;
 import com.developer4droid.swipegallery.ui.view.LongPressImageView;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -73,44 +66,4 @@ public class Utils {
 		});
 	}
 
-	public static final String EXTRA_STARTING_ALBUM_POSITION = "extra_starting_item_position";
-	public static final String EXTRA_CURRENT_ALBUM_POSITION = "extra_current_item_position";
-
-	@TargetApi(Build.VERSION_CODES.LOLLIPOP)
-	public static void createReenterTransition(final Activity activity, final RecyclerView recyclerView, final Bundle reenterState,
-											   final String newTransitionName) {
-		activity.setExitSharedElementCallback(new SharedElementCallback() {
-			@TargetApi(Build.VERSION_CODES.LOLLIPOP)
-			@Override
-			public void onMapSharedElements(List<String> names, Map<String, View> sharedElements) {
-				if (reenterState != null) {
-					int startingPosition = reenterState.getInt(EXTRA_STARTING_ALBUM_POSITION);
-					int currentPosition = reenterState.getInt(EXTRA_CURRENT_ALBUM_POSITION);
-					if (startingPosition != currentPosition) {
-
-						View newSharedElement = recyclerView.findViewWithTag(newTransitionName);
-						if (newSharedElement != null) {
-							names.clear();
-							names.add(newTransitionName);
-							sharedElements.clear();
-							sharedElements.put(newTransitionName, newSharedElement);
-						}
-					}
-
-				} else {
-					// If reenterState is null, then the activity is exiting.
-					View navigationBar = activity.findViewById(android.R.id.navigationBarBackground);
-					View statusBar = activity.findViewById(android.R.id.statusBarBackground);
-					if (navigationBar != null) {
-						names.add(navigationBar.getTransitionName());
-						sharedElements.put(navigationBar.getTransitionName(), navigationBar);
-					}
-					if (statusBar != null) {
-						names.add(statusBar.getTransitionName());
-						sharedElements.put(statusBar.getTransitionName(), statusBar);
-					}
-				}
-			}
-		});
-	}
 }
